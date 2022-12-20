@@ -294,12 +294,12 @@ func runMonitor(
 		}
 
 		alertStateLock.Lock()
-		_ = getAlertNotification(vm, &stats, alertState, errs)
+		notification := getAlertNotification(vm, &stats, alertState, errs)
 		alertStateLock.Unlock()
 
-		// if notification != nil {
-		// 	notificationService.SendValidatorAlertNotification(config, vm, stats, notification)
-		// }
+		if notification != nil {
+			notificationService.SendValidatorAlertNotification(config, vm, stats, notification)
+		}
 
 		notificationService.UpdateValidatorRealtimeStatus(configFile, config, vm, stats, writeConfigMutex)
 
